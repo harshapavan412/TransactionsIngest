@@ -1,0 +1,47 @@
+[
+  {
+    "sourceSystem": "Store Uptown",
+    "transactionId": 100001,
+    "cardNumber": "***1111",
+    "locationCode": "UPTOWN",
+    "productName": "Wireless Mouse",
+    "amount": 24.99,
+    "transactionTime": "2026-10-24T17:58:07Z"
+  },
+  {
+    "sourceSystem": "Store Uptown",
+    "transactionId": 100002,
+    "cardNumber": "***2222",
+    "locationCode": "UPTOWN",
+    "productName": "HDMI Cable",
+    "amount": 12.50,
+    "transactionTime": "2026-10-24T14:58:07Z"
+  },
+  {
+    "sourceSystem": "Store Uptown",
+    "transactionId": 100003,
+    "cardNumber": "",
+    "locationCode": "UPTOWN",
+    "productName": "Gift Card",
+    "amount": 50.00,
+    "transactionTime": "2026-10-24T11:58:07Z"
+  },
+  {
+    "sourceSystem": "Store Uptown",
+    "transactionId": 100004,
+    "cardNumber": "***3333",
+    "locationCode": "UPTOWN",
+    "productName": "Laptop Stand",
+    "amount": 39.99,
+    "transactionTime": "2026-10-23T13:58:07Z"
+  },
+  {
+    "sourceSystem": "Store Uptown",
+    "transactionId": 100005,
+    "cardNumber": "***1111",
+    "locationCode": "UPTOWN",
+    "productName": "Webcam",
+    "amount": 59.00,
+    "transactionTime": "2026-10-22T17:58:07Z"
+  }
+]

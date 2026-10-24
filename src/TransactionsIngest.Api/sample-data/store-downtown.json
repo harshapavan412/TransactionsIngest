@@ -1,0 +1,38 @@
+[
+  {
+    "sourceSystem": "Store Downtown",
+    "transactionId": 100001,
+    "cardNumber": "***0002",
+    "locationCode": "DOWNTOWN",
+    "productName": "Mechanical Keyboard",
+    "amount": 89.99,
+    "transactionTime": "2026-10-24T18:58:07Z"
+  },
+  {
+    "sourceSystem": "Store Downtown",
+    "transactionId": 100002,
+    "cardNumber": "***0005",
+    "locationCode": "DOWNTOWN",
+    "productName": "Monitor Arm",
+    "amount": 74.25,
+    "transactionTime": "2026-10-24T13:58:07Z"
+  },
+  {
+    "sourceSystem": "Store Downtown",
+    "transactionId": 100003,
+    "cardNumber": "***0007",
+    "locationCode": "DOWNTOWN",
+    "productName": "Desk Lamp",
+    "amount": 32.00,
+    "transactionTime": "2026-10-24T07:58:07Z"
+  },
+  {
+    "sourceSystem": "Store Downtown",
+    "transactionId": 100004,
+    "cardNumber": "",
+    "locationCode": "DOWNTOWN",
+    "productName": "Phone Charger",
+    "amount": 19.99,
+    "transactionTime": "2026-10-23T07:58:07Z"
+  }
+]

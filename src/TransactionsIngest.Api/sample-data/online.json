@@ -1,0 +1,47 @@
+[
+  {
+    "sourceSystem": "Online",
+    "transactionId": 100001,
+    "cardNumber": "***4444",
+    "locationCode": "ONLINE",
+    "productName": "USB-C Dock",
+    "amount": 129.95,
+    "transactionTime": "2026-10-24T16:58:07Z"
+  },
+  {
+    "sourceSystem": "Online",
+    "transactionId": 100002,
+    "cardNumber": "***5555",
+    "locationCode": "ONLINE",
+    "productName": "Bluetooth Speaker",
+    "amount": 149.00,
+    "transactionTime": "2026-10-24T15:58:07Z"
+  },
+  {
+    "sourceSystem": "Online",
+    "transactionId": 100003,
+    "cardNumber": "***6666",
+    "locationCode": "ONLINE",
+    "productName": "Ergonomic Chair",
+    "amount": 249.99,
+    "transactionTime": "2026-10-23T23:58:07Z"
+  },
+  {
+    "sourceSystem": "Online",
+    "transactionId": 100004,
+    "cardNumber": "***4444",
+    "locationCode": "ONLINE",
+    "productName": "USB-C Docking Station",
+    "amount": 129.95,
+    "transactionTime": "2026-10-24T12:58:07Z"
+  },
+  {
+    "sourceSystem": "Online",
+    "transactionId": 100005,
+    "cardNumber": "***7777",
+    "locationCode": "ONLINE",
+    "productName": "External SSD 1TB",
+    "amount": 99.99,
+    "transactionTime": "2026-10-23T03:58:07Z"
+  }
+]
