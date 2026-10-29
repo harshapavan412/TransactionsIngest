@@ -1,6 +1,16 @@
-@TransactionsIngest.Api_HostAddress = http://localhost:5071
+@Api = http://localhost:5071
 
-GET {{TransactionsIngest.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+### Run an import
+POST {{Api}}/api/import
 
-###
+### Recent import runs
+GET {{Api}}/api/import/runs
+
+### All transactions
+GET {{Api}}/api/transactions
+
+### Filter by source and status
+GET {{Api}}/api/transactions?sourceSystem=Store Uptown&status=Revoked
+
+### Audit history for one transaction (use an id from the list above)
+GET {{Api}}/api/transactions/1/audit
