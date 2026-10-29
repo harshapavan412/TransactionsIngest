@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using TransactionsIngest.Api.Data;
 using TransactionsIngest.Api.Import;
@@ -5,18 +6,22 @@ using TransactionsIngest.Api.Sources;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 builder.Services.AddOpenApi();
+builder.Services.AddProblemDetails();
 
 // Database
 builder.Services.AddDbContext<TransactionsDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("TransactionsDb")));
 
-// Import settings, validated at startup
+// Import
 builder.Services.AddOptions<ImportOptions>()
     .Bind(builder.Configuration.GetSection(ImportOptions.SectionName))
     .ValidateDataAnnotations()
     .ValidateOnStart();
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddScoped<IImportService, ImportService>();
 
 // Source systems (mocked with JSON snapshot files)
 builder.Services.AddOptions<SourceOptions>()
@@ -36,6 +41,11 @@ foreach (var system in sourceOptions.Systems)
         sp.GetRequiredService<ILogger<JsonFileTransactionSource>>()));
 }
 
+// CORS for the Angular dev server
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+builder.Services.AddCors(o => o.AddDefaultPolicy(policy =>
+    policy.WithOrigins(allowedOrigins).AllowAnyHeader().AllowAnyMethod()));
+
 var app = builder.Build();
 
 // Create or upgrade the SQLite database, then seed mock source files if missing.
@@ -47,12 +57,16 @@ using (var scope = app.Services.CreateScope())
     SampleDataSeeder.EnsureSampleData(sampleDataPath, sourceOptions.Systems, DateTime.UtcNow, app.Logger);
 }
 
+// Unhandled exceptions become a standard JSON error (RFC 7807 ProblemDetails), never a stack trace.
+app.UseExceptionHandler();
+app.UseStatusCodePages();
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-app.UseHttpsRedirection();
+app.UseCors();
 app.UseAuthorization();
 app.MapControllers();
 

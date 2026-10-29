@@ -42,6 +42,9 @@ namespace TransactionsIngest.Api.Data.Migrations
                     b.Property<int>("RevokedCount")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("SkippedCount")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("StartedAtUtc")
                         .HasColumnType("TEXT");
 

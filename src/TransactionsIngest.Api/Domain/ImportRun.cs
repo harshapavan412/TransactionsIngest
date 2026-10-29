@@ -20,5 +20,7 @@ public class ImportRun
     public int FinalizedCount { get; set; }
     public int UnchangedCount { get; set; }
 
+    public int SkippedCount { get; set; }   // invalid or duplicate records rejected by validation
+
     public List<TransactionAudit> AuditEntries { get; set; } = new();
 }
