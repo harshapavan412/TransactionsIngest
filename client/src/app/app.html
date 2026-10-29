@@ -1,0 +1,62 @@
+<header class="topbar">
+  <div>
+    <h1>Transactions Ingest</h1>
+    <p class="muted">Card transactions consolidated from Store Uptown, Store Downtown and Online.</p>
+  </div>
+  <button type="button" class="primary" (click)="runImport()" [disabled]="importing()">
+    {{ importing() ? 'Importing…' : 'Run import' }}
+  </button>
+</header>
+
+<main>
+  @if (importError(); as message) {
+    <p class="banner error" role="alert">{{ message }}</p>
+  }
+
+  @if (lastImport(); as run) {
+    <section class="banner" [class.warn]="!run.succeeded" aria-live="polite">
+      <strong>Import run #{{ run.importRunId }}</strong>
+      <span class="muted">{{ run.completedAtUtc | date: 'h:mm:ss a' }}</span>
+      <span>{{ run.inserted }} inserted</span>
+      <span>{{ run.updated }} updated</span>
+      <span>{{ run.revoked }} revoked</span>
+      <span>{{ run.restored }} restored</span>
+      <span>{{ run.finalized }} finalized</span>
+      <span>{{ run.unchanged }} unchanged</span>
+      <span>{{ run.skipped }} skipped</span>
+      @if (run.errorMessage) {
+        <span class="error-text">{{ run.errorMessage }}</span>
+      }
+    </section>
+  }
+
+  <section class="stats" aria-label="Totals">
+    <div><span class="stat-value">{{ totals().total }}</span><span class="muted">Total</span></div>
+    <div><span class="stat-value">{{ totals().active }}</span><span class="muted">Active</span></div>
+    <div><span class="stat-value">{{ totals().revoked }}</span><span class="muted">Revoked</span></div>
+    <div><span class="stat-value">{{ totals().finalized }}</span><span class="muted">Finalized</span></div>
+  </section>
+
+  @if (loadError(); as message) {
+    <p class="banner error" role="alert">
+      {{ message }}
+      <button type="button" (click)="loadTransactions()">Retry</button>
+    </p>
+  }
+
+  <div class="layout" [class.with-details]="selected()">
+    <app-transaction-table
+      [transactions]="transactions()"
+      [selectedId]="selectedId()"
+      (selected)="selectedId.set($event.id)"
+    />
+
+    @if (selected(); as transaction) {
+      <app-audit-history [transaction]="transaction" (closed)="selectedId.set(null)" />
+    }
+  </div>
+
+  @if (loading() && transactions().length === 0) {
+    <p class="muted">Loading transactions…</p>
+  }
+</main>

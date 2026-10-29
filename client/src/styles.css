@@ -1,0 +1,125 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9;
+  --surface: #ffffff;
+  --surface-2: #f1f3f6;
+  --border: #dde1e7;
+  --text: #1b1f24;
+  --muted: #5d6673;
+  --accent: #2f5bd3;
+  --accent-soft: #e6edfc;
+  --ok: #1f7a4d;
+  --ok-soft: #e3f3ea;
+  --danger: #b42318;
+  --danger-soft: #fdecea;
+  --neutral-soft: #eceef1;
+  --radius: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #111418;
+    --surface: #181c21;
+    --surface-2: #1f242a;
+    --border: #2d333b;
+    --text: #e6e9ed;
+    --muted: #9aa3ae;
+    --accent: #7c9ff0;
+    --accent-soft: #22304f;
+    --ok: #5cc28c;
+    --ok-soft: #173326;
+    --danger: #f07167;
+    --danger-soft: #3a1c1a;
+    --neutral-soft: #2a2f36;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.4;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  padding: 8px 16px;
+}
+
+input,
+select {
+  padding: 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.mono {
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  color: var(--danger);
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge[data-status='Active'] {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.badge[data-status='Revoked'] {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.badge[data-status='Finalized'] {
+  background: var(--neutral-soft);
+  color: var(--muted);
+}

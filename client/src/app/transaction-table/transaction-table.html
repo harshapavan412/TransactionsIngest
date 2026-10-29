@@ -1,0 +1,90 @@
+<div class="filters">
+  <label>
+    Source
+    <select [ngModel]="sourceFilter()" (ngModelChange)="setFilter('source', $event)">
+      <option value="">All sources</option>
+      @for (source of sources(); track source) {
+        <option [value]="source">{{ source }}</option>
+      }
+    </select>
+  </label>
+
+  <label>
+    Status
+    <select [ngModel]="statusFilter()" (ngModelChange)="setFilter('status', $event)">
+      <option value="">All statuses</option>
+      @for (status of statuses; track status) {
+        <option [value]="status">{{ status }}</option>
+      }
+    </select>
+  </label>
+
+  <label class="grow">
+    Search
+    <input
+      type="search"
+      placeholder="Product, location or ID"
+      [ngModel]="search()"
+      (ngModelChange)="setFilter('search', $event)"
+    />
+  </label>
+</div>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        @for (column of columns; track column.key) {
+          <th [attr.aria-sort]="ariaSort(column.key)" [class.num]="column.numeric">
+            <button type="button" (click)="sortBy(column.key)">
+              {{ column.label }}<span class="arrow" aria-hidden="true">{{ arrow(column.key) }}</span>
+            </button>
+          </th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (t of pageItems(); track t.id) {
+        <tr
+          [class.selected]="t.id === selectedId()"
+          tabindex="0"
+          (click)="selected.emit(t)"
+          (keydown.enter)="selected.emit(t)"
+        >
+          <td>{{ t.sourceSystem }}</td>
+          <td class="mono">{{ t.transactionId }}</td>
+          <td>{{ t.locationCode }}</td>
+          <td>{{ t.productName }}</td>
+          <td class="num mono">{{ t.amount | currency: 'USD' }}</td>
+          <td [title]="t.transactionTime + ' (UTC)'">{{ t.transactionTime | date: 'MMM d, h:mm a' }}</td>
+          <td><span class="badge" [attr.data-status]="t.status">{{ t.status }}</span></td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="7" class="empty">No transactions match. Run an import or clear the filters.</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<div class="pager">
+  <span class="muted">{{ filtered().length }} of {{ transactions().length }} transactions</span>
+  <label class="page-size">
+    Rows
+    <select [ngModel]="pageSize()" (ngModelChange)="setPageSize($event)">
+      @for (size of pageSizes; track size) {
+        <option [ngValue]="size">{{ size }}</option>
+      }
+    </select>
+  </label>
+  <div class="page-buttons">
+    <button type="button" (click)="page.set(currentPage() - 1)" [disabled]="currentPage() === 1">
+      Previous
+    </button>
+    <span>Page {{ currentPage() }} of {{ pageCount() }}</span>
+    <button type="button" (click)="page.set(currentPage() + 1)" [disabled]="currentPage() === pageCount()">
+      Next
+    </button>
+  </div>
+</div>

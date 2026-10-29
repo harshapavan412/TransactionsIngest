@@ -1,0 +1,46 @@
+@let t = transaction();
+
+<header>
+  <div>
+    <p class="eyebrow">{{ t.sourceSystem }} · #{{ t.transactionId }}</p>
+    <h2>{{ t.productName }}</h2>
+  </div>
+  <button type="button" class="icon" (click)="closed.emit()" aria-label="Close details">✕</button>
+</header>
+
+<dl class="details">
+  <div><dt>Amount</dt><dd class="mono">{{ t.amount | currency: 'USD' }}</dd></div>
+  <div><dt>Status</dt><dd><span class="badge" [attr.data-status]="t.status">{{ t.status }}</span></dd></div>
+  <div><dt>Card</dt><dd class="mono">{{ t.cardNumber || 'Non-card payment' }}</dd></div>
+  <div><dt>Location</dt><dd>{{ t.locationCode }}</dd></div>
+  <div class="wide"><dt>Transaction time (UTC)</dt><dd class="mono">{{ t.transactionTime }}</dd></div>
+</dl>
+
+<h3>Audit history</h3>
+
+@if (error(); as message) {
+  <p class="error">{{ message }}</p>
+} @else if (loading()) {
+  <p class="muted">Loading…</p>
+} @else {
+  <ol class="timeline">
+    @for (entry of entries(); track entry.id) {
+      <li>
+        <div class="row">
+          <span class="change" [attr.data-change]="entry.changeType">{{ entry.changeType }}</span>
+          <span class="muted small">Run #{{ entry.importRunId }} · {{ entry.changedAtUtc | date: 'MMM d, h:mm:ss a' }}</span>
+        </div>
+        @if (entry.changeType === 'Updated') {
+          <div class="diff">
+            <strong>{{ entry.fieldName }}</strong>
+            <span class="old">{{ entry.oldValue || '(empty)' }}</span>
+            <span aria-hidden="true">→</span>
+            <span class="new">{{ entry.newValue || '(empty)' }}</span>
+          </div>
+        }
+      </li>
+    } @empty {
+      <li class="muted">No audit entries.</li>
+    }
+  </ol>
+}
